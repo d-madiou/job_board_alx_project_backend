@@ -1,16 +1,16 @@
+# companies/views.py - Updated views to handle file uploads
 from rest_framework import generics, permissions, filters, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
-from django.db.models import Count
+from django.db.models import Count, Q
 from .models import Company
 from .serializers import (
     CompanyListSerializer, CompanyDetailSerializer, CompanyCreateUpdateSerializer
 )
-from django.db.models import Count, Q
-
 
 @extend_schema_view(
     get=extend_schema(
@@ -40,18 +40,19 @@ class CompanyListView(generics.ListAPIView):
 @extend_schema_view(
     post=extend_schema(
         summary="Create a new company",
-        description="Create a new company (Admin only)"
+        description="Create a new company with logo upload (Admin/Employer only)"
     )
 )
 class CompanyCreateView(generics.CreateAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanyCreateUpdateSerializer
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]  # Add parsers for file uploads
 
     def perform_create(self, serializer):
         # Only admins and employers can create companies
         if self.request.user.role not in ['admin', 'employer']:
-            raise permissions.PermissionDenied("Only admins and employers can create companies")
+            raise PermissionDenied("Only admins and employers can create companies")
         serializer.save()
 
 @extend_schema_view(
@@ -71,11 +72,11 @@ class CompanyDetailView(generics.RetrieveAPIView):
 @extend_schema_view(
     put=extend_schema(
         summary="Update company",
-        description="Update company information (Admin only)"
+        description="Update company information with logo upload (Employer only)"
     ),
     patch=extend_schema(
         summary="Partially update company",
-        description="Partially update company information (Admin only)"
+        description="Partially update company information with logo upload (Employer only)"
     ),
     delete=extend_schema(
         summary="Delete company",
@@ -85,17 +86,16 @@ class CompanyDetailView(generics.RetrieveAPIView):
 class CompanyUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanyCreateUpdateSerializer
-    permission_classes = [permissions.IsAuthenticated] # Ensure the user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]  # Add parsers for file uploads
     lookup_field = 'slug'
 
     def perform_update(self, serializer):
-        # self.request.user should have a 'role' attribute (from your authentication setup)
         if self.request.user.role != 'employer':
-            raise PermissionDenied("Only admins can update companies") # <--- Use the imported PermissionDenied
+            raise PermissionDenied("Only employers can update companies")
         serializer.save()
 
     def perform_destroy(self, instance):
-        # self.request.user should have a 'role' attribute
         if self.request.user.role != 'admin':
-            raise PermissionDenied("Only admins can delete companies") # <--- Use the imported PermissionDenied
+            raise PermissionDenied("Only admins can delete companies")
         instance.delete()
