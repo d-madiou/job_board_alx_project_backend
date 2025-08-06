@@ -9,6 +9,9 @@ urlpatterns = [
     
     # API URLs - only authentication for now
     path('api/auth/', include('authentication.urls')),
+    path('api/companies/', include('companies.urls')),
+    path('api/jobs/', include('jobs.urls')),
+    path('api/applications/', include('applications.urls')),
     
     # API Documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

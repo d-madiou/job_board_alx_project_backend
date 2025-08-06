@@ -1,5 +1,11 @@
 from django.urls import path
+from .views import (
+    CompanyListView, CompanyCreateView, CompanyDetailView, CompanyUpdateDeleteView
+)
 
 urlpatterns = [
-    # Job URLs will be added here later
+    path('', CompanyListView.as_view(), name='company-list'),
+    path('create/', CompanyCreateView.as_view(), name='company-create'),
+    path('<slug:slug>/', CompanyDetailView.as_view(), name='company-detail'),
+    path('<slug:slug>/edit/', CompanyUpdateDeleteView.as_view(), name='company-update-delete'),
 ]
