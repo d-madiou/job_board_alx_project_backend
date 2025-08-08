@@ -21,7 +21,6 @@ class User(AbstractUser):
     location = models.CharField(max_length=255, blank=True)
     resume_url = models.URLField(blank=True, help_text="URL to resume file")
     
-    # Additional fields
     linkedin_url = models.URLField(blank=True)
     github_url = models.URLField(blank=True)
     website_url = models.URLField(blank=True)

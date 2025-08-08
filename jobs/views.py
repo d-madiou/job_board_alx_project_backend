@@ -13,7 +13,6 @@ from .serializers import (
 )
 from .filters import JobFilter
 
-# Category Views
 @extend_schema_view(
     get=extend_schema(
         summary="List all categories",
@@ -104,7 +103,6 @@ class JobDetailView(generics.RetrieveAPIView):
     
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        # Increment view count
         instance.increment_views()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

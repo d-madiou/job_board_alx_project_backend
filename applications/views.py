@@ -173,13 +173,11 @@ def withdraw_application_view(request, application_id):
 @permission_classes([permissions.IsAuthenticated])
 def application_stats_view(request):
     user = request.user
-    
     if user.role == 'admin':
         queryset = Application.objects.all()
     elif user.role == 'employer':
         queryset = Application.objects.filter(job__posted_by=user)
     else:
-        # For job seekers, show their application stats
         queryset = Application.objects.filter(applicant=user)
         stats = {
             'total_applications': queryset.count(),
@@ -193,7 +191,6 @@ def application_stats_view(request):
         }
         return Response(stats)
     
-    # For admins and employers
     stats = {
         'total_applications': queryset.count(),
         'pending': queryset.filter(status='pending').count(),
