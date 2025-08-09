@@ -86,7 +86,8 @@ WSGI_APPLICATION = 'jobboard.wsgi.application'
 # --- DATABASE CONFIGURATION ---
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default='sqlite:///db.sqlite3',  # fallback for local/dev
+        conn_max_age=600
     )
 }
 
