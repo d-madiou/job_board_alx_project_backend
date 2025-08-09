@@ -85,16 +85,11 @@ WSGI_APPLICATION = 'jobboard.wsgi.application'
 
 # --- DATABASE CONFIGURATION ---
 DATABASES = {
-    'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'TFOSrEzgdaLWywLfZyhZgyGMtqZeqyBz',
-        'HOST': 'postgres.railway.internal',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
+
 # Custom User Model
 AUTH_USER_MODEL = 'authentication.User'
 
