@@ -7,6 +7,7 @@ from companies.models import Company
 User = get_user_model()
 
 class Category(models.Model):
+    '''I will implement the model category in this part'''
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
@@ -28,6 +29,7 @@ class Category(models.Model):
         return self.jobs.filter(is_active=True).count()
 
 class Job(models.Model):
+    '''I will define all the models of the Job here'''
     JOB_TYPE_CHOICES = [
         ('full_time', 'Full Time'),
         ('part_time', 'Part Time'),
@@ -58,7 +60,7 @@ class Job(models.Model):
     responsibilities = models.TextField(blank=True)
     benefits = models.TextField(blank=True)
     
-    # Location and Remote
+    # Let's define as Location and Remote
     location = models.CharField(max_length=255, blank=True)
     is_remote = models.BooleanField(default=False)
     remote_type = models.CharField(

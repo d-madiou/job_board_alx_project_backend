@@ -7,13 +7,13 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    # API URLs - only authentication for now
+    # API URLs for all 3 applications
     path('api/auth/', include('authentication.urls')),
     path('api/companies/', include('companies.urls')),
     path('api/jobs/', include('jobs.urls')),
     path('api/applications/', include('applications.urls')),
     
-    # API Documentation
+    # All my AI documentations will be here
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
