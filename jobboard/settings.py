@@ -16,7 +16,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '127.0.0.1:8000']
 else:
     # Production settings for Railway
-    ALLOWED_HOSTS = [config('RAILWAY_STATIC_URL', default='127.0.0.1').strip('/')]
+    ALLOWED_HOSTS = [host.strip() for host in config('DJANGO_ALLOWED_HOSTS', default='127.0.0.1').split(',')]
 
 # Application definition
 DJANGO_APPS = [
