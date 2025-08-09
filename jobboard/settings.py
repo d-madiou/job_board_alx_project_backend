@@ -16,7 +16,8 @@ if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '127.0.0.1:8000']
 else:
     # Production settings for Railway
-    ALLOWED_HOSTS = [host.strip() for host in config('DJANGO_ALLOWED_HOSTS', default='127.0.0.1').split(',')]
+    ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
+    print(f"DEBUG: ALLOWED_HOSTS is set to {ALLOWED_HOSTS}")
 
 # Application definition
 DJANGO_APPS = [
