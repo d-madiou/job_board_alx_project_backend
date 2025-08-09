@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --------------------
 # ENVIRONMENT SETTINGS
 # --------------------
-ENVIRONMENT = config("ENVIRONMENT", default="development")  # 'development' or 'production'
+ENVIRONMENT = config("ENVIRONMENT", default="development")
 DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="changeme-secret-key")
 
@@ -29,14 +29,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Third-party apps
     'rest_framework',
     'corsheaders',
-
-    # Your apps
+    
     'jobs',
     'companies',
-    'users',
+    'authentication',
+    'applications'
 ]
 
 # --------------------
