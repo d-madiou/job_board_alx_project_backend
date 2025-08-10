@@ -297,5 +297,4 @@ class Command(BaseCommand):
                     applications_created_count += 1
                     # self.stdout.write(f'  Created application for {job_seeker.username} to {job.title}') # Too verbose for many apps
         self.stdout.write(self.style.SUCCESS(f'Created {applications_created_count} applications.'))
-        
         self.stdout.write(self.style.SUCCESS('Sample data creation complete!'))

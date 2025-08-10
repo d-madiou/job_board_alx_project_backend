@@ -6,11 +6,10 @@ from .views import (
 )
 
 urlpatterns = [
-    # Category URLs
+   
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('categories/create/', CategoryCreateView.as_view(), name='category-create'),
     
-    # Job URLs
     path('', JobListView.as_view(), name='job-list'),
     path('create/', JobCreateView.as_view(), name='job-create'),
     path('featured/', featured_jobs_view, name='featured-jobs'),

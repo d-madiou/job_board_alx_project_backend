@@ -15,7 +15,7 @@ This project is a RESTful API built with Django and Django REST Framework to pow
 
 - **Backend Framework**: Django
 - **API Framework**: Django REST Framework (DRF)
-- **Database**: PostgreSQL (or SQLite for development)
+- **Database**: PostgreSQL (or SQLite for development) visit this folder(databaseInfo/) to see how I handle the indexing and optimizing the performance
 - **Authentication**: JWT (JSON Web Tokens)
 - **Package Manager**: Pip
 
